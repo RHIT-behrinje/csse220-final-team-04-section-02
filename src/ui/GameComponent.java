@@ -2,16 +2,21 @@ package ui;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JComponent;
 
 import model.GameModel;
+
+
 
 public class GameComponent extends JComponent {
 
 	
 	
 	private GameModel model;
+	//Character player =  new Character(0,0)
 
 
 	public GameComponent(GameModel model) {
@@ -26,6 +31,9 @@ public class GameComponent extends JComponent {
 
 	// Minimal placeholder to test  it’s running
 	g2.drawString("Final Project Starter: UI is running ✅", 20, 30);
+	
+	
+
 
 
 	// TODO: draw based on model state
