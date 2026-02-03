@@ -28,6 +28,59 @@ public class GameComponent extends JComponent {
 
 	public GameComponent(GameModel model) {
 	this.model = model;
+	
+    timer = new Timer(20, e -> {
+    	  player.update(WIDTH, HEIGHT);
+    	  repaint();
+    	});
+    	timer.start();
+    	setFocusable(true);
+  	
+  	  addKeyListener(new KeyAdapter() {
+    	    @Override
+    	    public void keyPressed(KeyEvent e) {
+    	      if (e.getKeyCode() == KeyEvent.VK_D) {
+    	        player.movepx();
+    	      }
+    	      if (e.getKeyCode() == KeyEvent.VK_A) {
+      	        player.movenx();
+      	      }
+    	      if (e.getKeyCode() == KeyEvent.VK_W) {
+      	        player.moveny();
+      	      }
+    	      if (e.getKeyCode() == KeyEvent.VK_S) {
+      	        player.movepy();
+      	      }
+    	      
+    	      
+    	    }
+    	    
+    	    public void keyReleased(KeyEvent e) {
+      	      if (e.getKeyCode() == KeyEvent.VK_D) {
+      	        player.stop();
+      	      }
+      	      if (e.getKeyCode() == KeyEvent.VK_A) {
+        	        player.stop();
+        	      }
+      	      if (e.getKeyCode() == KeyEvent.VK_W) {
+        	        player.stop();
+        	      }
+      	      if (e.getKeyCode() == KeyEvent.VK_S) {
+        	        player.stop();
+        	      }
+      	      
+      	      
+      	    }
+    	  });
+  	  
+	    timer = new Timer(70, e -> {
+	    	  zombie.update(WIDTH, HEIGHT);
+	    	  zombie.randmove();
+	    	  repaint();
+	    	  
+	    	});
+	    	timer.start();
+	    	
 	}
 
 
@@ -39,51 +92,9 @@ public class GameComponent extends JComponent {
 	zombie.draw(g2);
 	}
 	
-	public GameComponent() {
+//	public GameComponent() {
 	
-    timer = new Timer(20, e -> {
-  	  player.update(WIDTH, HEIGHT);
-  	  repaint();
-  	});
-  	timer.start();
-  	setFocusable(true);
-	
-	  addKeyListener(new KeyAdapter() {
-  	    @Override
-  	    public void keyPressed(KeyEvent e) {
-  	      if (e.getKeyCode() == KeyEvent.VK_D) {
-  	        player.movepx();
-  	      }
-  	      if (e.getKeyCode() == KeyEvent.VK_A) {
-    	        player.movenx();
-    	      }
-  	      if (e.getKeyCode() == KeyEvent.VK_W) {
-    	        player.moveny();
-    	      }
-  	      if (e.getKeyCode() == KeyEvent.VK_S) {
-    	        player.movepy();
-    	      }
-  	      
-  	      
-  	    }
-  	    
-  	    public void keyReleased(KeyEvent e) {
-    	      if (e.getKeyCode() == KeyEvent.VK_D) {
-    	        player.stop();
-    	      }
-    	      if (e.getKeyCode() == KeyEvent.VK_A) {
-      	        player.stop();
-      	      }
-    	      if (e.getKeyCode() == KeyEvent.VK_W) {
-      	        player.stop();
-      	      }
-    	      if (e.getKeyCode() == KeyEvent.VK_S) {
-      	        player.stop();
-      	      }
-    	      
-    	      
-    	    }
-  	  });
+
 	 
 	    
 	  
@@ -96,31 +107,12 @@ public class GameComponent extends JComponent {
 
 
 	// TODO: draw based on model state
-	}
-	
-	public GameComponent(String name) {
-		
-	    timer = new Timer(70, e -> {
-	    	  zombie.update(WIDTH, HEIGHT);
-	    	  repaint();
-	    	});
-	    	timer.start();
-	    
-	    	double r = Math.random();
-	    	
-	    	if (r >= 0 && r < 0.25){
-	    		zombie.movenx();
-	    	}
-	    	if (r >= 0.25 && r < 0.5){
-	    		zombie.movepx();
-	    	}
-	    	if (r >= 0.5 && r < 0.75){
-	    		zombie.moveny();
-	    	}
-	    	if (r >= 0.75 && r < 1.0){
-	    		zombie.movepy();
-	    	}
-		
-		
-	}
+//	}
+//	
+//	public GameComponent(String name) {
+//		
+//
+//		
+//		
+//	}
 }
