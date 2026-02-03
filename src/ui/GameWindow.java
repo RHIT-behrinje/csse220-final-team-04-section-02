@@ -16,6 +16,7 @@ public class GameWindow {
 
 
 		frame.add(new GameComponent(model));
+		frame.add(new GameComponent());
 
 
 		frame.setSize(600, 600);
