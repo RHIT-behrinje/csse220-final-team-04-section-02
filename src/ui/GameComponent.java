@@ -10,6 +10,7 @@ import javax.swing.Timer;
 
 import model.Characterz;
 import model.GameModel;
+import model.Zombie;
 
 
 
@@ -22,6 +23,7 @@ public class GameComponent extends JComponent {
 	private Timer timer;
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 600;
+	Zombie zombie = new Zombie(400, 500);
 
 
 	public GameComponent(GameModel model) {
@@ -34,6 +36,7 @@ public class GameComponent extends JComponent {
 	super.paintComponent(g);
 	Graphics2D g2 = (Graphics2D) g;
 	player.draw(g2);
+	zombie.draw(g2);
 	}
 	
 	public GameComponent() {
@@ -81,6 +84,8 @@ public class GameComponent extends JComponent {
     	      
     	    }
   	  });
+	 
+	    
 	  
 
 	// Minimal placeholder to test  it’s running
@@ -91,5 +96,31 @@ public class GameComponent extends JComponent {
 
 
 	// TODO: draw based on model state
+	}
+	
+	public GameComponent(String name) {
+		
+	    timer = new Timer(70, e -> {
+	    	  zombie.update(WIDTH, HEIGHT);
+	    	  repaint();
+	    	});
+	    	timer.start();
+	    
+	    	double r = Math.random();
+	    	
+	    	if (r >= 0 && r < 0.25){
+	    		zombie.movenx();
+	    	}
+	    	if (r >= 0.25 && r < 0.5){
+	    		zombie.movepx();
+	    	}
+	    	if (r >= 0.5 && r < 0.75){
+	    		zombie.moveny();
+	    	}
+	    	if (r >= 0.75 && r < 1.0){
+	    		zombie.movepy();
+	    	}
+		
+		
 	}
 }
