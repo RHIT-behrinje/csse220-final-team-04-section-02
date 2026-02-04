@@ -19,11 +19,11 @@ public class GameComponent extends JComponent {
 	
 	
 	private GameModel model;
-	Characterz player =  new Characterz(100,100);
+	Characterz player =  new Characterz(3*GameModel.tileSize,3*GameModel.tileSize);
 	private Timer timer;
-	public static final int WIDTH = 600;
-	public static final int HEIGHT = 600;
-	Zombie zombie = new Zombie(400, 500);
+	public static final int WIDTH = 20*GameModel.tileSize;
+	public static final int HEIGHT = 20*GameModel.tileSize;
+	Zombie zombie = new Zombie(13*GameModel.tileSize, 17*GameModel.tileSize);
 
 
 	public GameComponent(GameModel model) {
