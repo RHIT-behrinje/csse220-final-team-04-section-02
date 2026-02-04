@@ -14,8 +14,8 @@ public class Zombie {
 	int dy = 0;
 	private static BufferedImage sprite = null;
 	private static boolean triedLoad = false;
-	int height = 96;
-	int width = 64;
+	int height = GameModel.tileSize;
+	int width = GameModel.tileSize;
 	
 	public Zombie(int x, int y) {
 		this.x = x;
@@ -73,16 +73,16 @@ public class Zombie {
 		this.dx = 0;
 	}
 	public void movepx() {
-		this.dx = 20;
+		this.dx = GameModel.tileSize;
 	}
 	public void movenx() {
-		this.dx = -20;
+		this.dx = -GameModel.tileSize;
 	}
 	public void movepy() {
-		this.dy = 20;
+		this.dy = GameModel.tileSize;
 	}
 	public void moveny() {
-		this.dy = -20;
+		this.dy = -GameModel.tileSize;
 	}
 	
 	public void update(int worldWidth, int worldHeight) {
