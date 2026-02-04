@@ -4,30 +4,73 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JComponent;
 import javax.swing.Timer;
 
 import model.Characterz;
 import model.GameModel;
+import model.Wall;
 import model.Zombie;
 
 
 
 public class GameComponent extends JComponent {
-
-	
+	Characterz player;
 	
 	private GameModel model;
-	Characterz player =  new Characterz(3*GameModel.tileSize,3*GameModel.tileSize);
+	
 	private Timer timer;
 	public static final int WIDTH = 20*GameModel.tileSize;
 	public static final int HEIGHT = 20*GameModel.tileSize;
-	Zombie zombie = new Zombie(13*GameModel.tileSize, 17*GameModel.tileSize);
+	ArrayList zombie = new ArrayList<Zombie>();
+	ArrayList walls = new ArrayList<Wall>();
 
 
 	public GameComponent(GameModel model) {
 	this.model = model;
+	
+	File file = new File("level1.txt"); 
+    
+    
+    try {
+    	  Scanner scanner = new Scanner(file);
+	    
+	    int row = 0;
+
+	    while (scanner.hasNextLine()) {
+	      String line = scanner.nextLine();
+
+	      for (int col = 0; col < line.length(); col++) {
+	        char c = line.charAt(col);
+
+	        if (c == 'P') {
+	        	this.player =  new Characterz(col * GameModel.tileSize,row*GameModel.tileSize);
+	    	      
+	      }
+	        if (c == 'Z') {
+	        	this.zombie.add(new Zombie(col * GameModel.tileSize,row*GameModel.tileSize));
+	        }
+	        
+	        if (c == '*') {
+	        	this.walls.add(new Wall(col * GameModel.tileSize,row*GameModel.tileSize));
+	        }
+	    	
+	      }
+
+	      row++;
+	    }
+
+	    scanner.close();
+    
+    	 
+    	} catch (FileNotFoundException e) {
+    	  System.out.println("level1.txt not found");
+    	}
 	
     timer = new Timer(20, e -> {
     	  player.update(WIDTH, HEIGHT);
@@ -74,12 +117,19 @@ public class GameComponent extends JComponent {
     	  });
   	  
 	    timer = new Timer(70, e -> {
-	    	  zombie.update(WIDTH, HEIGHT);
-	    	  zombie.randmove();
+	    	for (int i = 0; i < zombie.size(); i++) {
+				Zombie z = (Zombie) zombie.get(i);
+				z.update(WIDTH, HEIGHT);
+				z.randmove();
+			}
+//	    	  zombie.update(WIDTH, HEIGHT);
+//	    	  zombie.randmove();
 	    	  repaint();
 	    	  
 	    	});
 	    	timer.start();
+	    	
+	    	
 	    	
 	}
 
@@ -88,8 +138,16 @@ public class GameComponent extends JComponent {
 	protected void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	Graphics2D g2 = (Graphics2D) g;
+	for (int i = 0; i < walls.size(); i++) {
+		Wall wall = (Wall) walls.get(i);
+		wall.draw(g2);
+	}
 	player.draw(g2);
-	zombie.draw(g2);
+	for (int i = 0; i < zombie.size(); i++) {
+		Zombie z = (Zombie) zombie.get(i);
+		z.draw(g2);
+	}
+	
 	}
 	
 //	public GameComponent() {

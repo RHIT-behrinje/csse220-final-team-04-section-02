@@ -3,7 +3,10 @@ package model;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
@@ -11,7 +14,9 @@ import javax.imageio.ImageIO;
 
 public class Characterz {
 	
-	int x;
+	int startX;
+	int startY;
+	int x = startX;
 	int y;
 	int dx = 0;
 	int dy = 0;
@@ -72,9 +77,8 @@ public class Characterz {
 	public void update(int worldWidth, int worldHeight) {
 		x = x + dx;
 		y = y + dy;
-
-
-	
+		
+	  	  
 
 
 	// Left wall
