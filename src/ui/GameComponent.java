@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.Timer;
 
 import model.Characterz;
+import model.Floor;
 import model.GameModel;
 import model.Wall;
 import model.Zombie;
@@ -29,6 +30,7 @@ public class GameComponent extends JComponent {
 	public static final int HEIGHT = 20*GameModel.tileSize;
 	ArrayList zombie = new ArrayList<Zombie>();
 	ArrayList walls = new ArrayList<Wall>();
+	ArrayList floors = new ArrayList<Floor>();
 
 
 	public GameComponent(GameModel model) {
@@ -59,6 +61,11 @@ public class GameComponent extends JComponent {
 	        if (c == '*') {
 	        	this.walls.add(new Wall(col * GameModel.tileSize,row*GameModel.tileSize));
 	        }
+	        //stuff below this is before pull
+	        if (c == '.' || c == 'Z' || c == 'P'|| c == 'C') {
+	        	this.floors.add(new Floor(col * GameModel.tileSize,row*GameModel.tileSize));
+	        }
+
 	    	
 	      }
 
@@ -141,6 +148,10 @@ public class GameComponent extends JComponent {
 	for (int i = 0; i < walls.size(); i++) {
 		Wall wall = (Wall) walls.get(i);
 		wall.draw(g2);
+	}
+	for (int i = 0; i < floors.size(); i++) {
+		Floor floor = (Floor) floors.get(i);
+		floor.draw(g2);
 	}
 	player.draw(g2);
 	for (int i = 0; i < zombie.size(); i++) {
