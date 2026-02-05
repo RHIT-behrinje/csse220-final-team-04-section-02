@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.Timer;
 
 import model.Characterz;
+import model.EXIT;
 import model.Floor;
 import model.GameModel;
 import model.Wall;
@@ -22,6 +23,7 @@ import model.Zombie;
 
 public class GameComponent extends JComponent {
 	Characterz player;
+	EXIT exit;
 	
 	private GameModel model;
 	
@@ -64,6 +66,9 @@ public class GameComponent extends JComponent {
 	        //stuff below this is before pull
 	        if (c == '.' || c == 'Z' || c == 'P'|| c == 'C') {
 	        	this.floors.add(new Floor(col * GameModel.tileSize,row*GameModel.tileSize));
+	        }
+	        if (c == 'E') {
+	        	this.exit =  new EXIT(col * GameModel.tileSize,row*GameModel.tileSize);
 	        }
 
 	    	
@@ -153,6 +158,7 @@ public class GameComponent extends JComponent {
 		Floor floor = (Floor) floors.get(i);
 		floor.draw(g2);
 	}
+	exit.draw(g2);
 	player.draw(g2);
 	for (int i = 0; i < zombie.size(); i++) {
 		Zombie z = (Zombie) zombie.get(i);
