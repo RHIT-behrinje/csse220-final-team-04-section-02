@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import ui.GameComponent;
+
 public class Zombie {
 	
 	int x;
@@ -87,9 +89,10 @@ public class Zombie {
 	}
 	
 	public void update(int worldWidth, int worldHeight) {
+		if(GameComponent.wallTest(x + dx, y + dy)) {
 		x = x + dx;
 		y = y + dy;
-
+		}
 
 	
 

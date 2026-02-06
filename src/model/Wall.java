@@ -9,8 +9,8 @@ import javax.imageio.ImageIO;
 
 public class Wall {
 	
-	int x;
-	int y;
+	public int x;
+	public int y;
 	private static BufferedImage sprite = null;
 	private static boolean triedLoad = false;
 	int height = GameModel.tileSize;
@@ -46,5 +46,4 @@ public class Wall {
 		g2.fillRect(x, y, width, height);
 		}
 	}
-
 }

@@ -10,16 +10,18 @@ import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
+import ui.GameComponent;
+
 
 
 public class Characterz {
 	
 	int startX;
 	int startY;
-	int x = startX;
-	int y;
-	int dx = 0;
-	int dy = 0;
+	public int x = startX;
+	public int y;
+	public int dx = 0;
+	public int dy = 0;
 	private static BufferedImage sprite = null;
 	private static boolean triedLoad = false;
 	int height = GameModel.tileSize;
@@ -75,10 +77,10 @@ public class Characterz {
 	}
 	
 	public void update(int worldWidth, int worldHeight) {
+		if(GameComponent.wallTest(x + dx, y + dy)) {
 		x = x + dx;
 		y = y + dy;
-		
-	  	  
+		}
 
 
 	// Left wall

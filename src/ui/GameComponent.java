@@ -22,7 +22,7 @@ import model.Zombie;
 
 
 public class GameComponent extends JComponent {
-	Characterz player;
+	static Characterz player;
 	EXIT exit;
 	
 	private GameModel model;
@@ -31,8 +31,9 @@ public class GameComponent extends JComponent {
 	public static final int WIDTH = 20*GameModel.tileSize;
 	public static final int HEIGHT = 20*GameModel.tileSize;
 	ArrayList zombie = new ArrayList<Zombie>();
-	ArrayList walls = new ArrayList<Wall>();
+	static ArrayList walls = new ArrayList<Wall>();
 	ArrayList floors = new ArrayList<Floor>();
+	
 
 
 	public GameComponent(GameModel model) {
@@ -166,6 +167,16 @@ public class GameComponent extends JComponent {
 	}
 	
 	}
+	public static boolean wallTest(int x,int y) {
+		for(int i = 0; i < walls.size(); i++) {
+			Wall wall = (Wall) walls.get(i);
+			if(wall.x == x && wall.y == y) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	
 //	public GameComponent() {
 	
