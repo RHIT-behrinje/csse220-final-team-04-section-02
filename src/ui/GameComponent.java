@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.Timer;
 
 import model.Characterz;
+import model.Coin;
 import model.EXIT;
 import model.Floor;
 import model.GameModel;
@@ -33,6 +34,7 @@ public class GameComponent extends JComponent {
 	ArrayList zombie = new ArrayList<Zombie>();
 	static ArrayList walls = new ArrayList<Wall>();
 	ArrayList floors = new ArrayList<Floor>();
+	static ArrayList coins = new ArrayList<Coin>();
 	
 
 
@@ -70,6 +72,9 @@ public class GameComponent extends JComponent {
 	        }
 	        if (c == 'E') {
 	        	this.exit =  new EXIT(col * GameModel.tileSize,row*GameModel.tileSize);
+	        }
+	        if (c == 'C') {
+	        	this.coins.add(new Coin(col * GameModel.tileSize,row*GameModel.tileSize));
 	        }
 
 	    	
@@ -158,6 +163,10 @@ public class GameComponent extends JComponent {
 	for (int i = 0; i < floors.size(); i++) {
 		Floor floor = (Floor) floors.get(i);
 		floor.draw(g2);
+	}
+	for (int i = 0; i < coins.size(); i++) {
+		Coin coin = (Coin) coins.get(i);
+		coin.draw(g2);
 	}
 	exit.draw(g2);
 	player.draw(g2);
