@@ -93,10 +93,10 @@ public class Zombie {
 	}
 	
 	public void update(int worldWidth, int worldHeight) {
-		//if(GameComponent.wallTest(x + dx, y + dy)) {
+		if(GameComponent.wallTest(x + dx, y + dy)) {
 		x = x + dx;
 		y = y + dy;
-		//}
+		}
 
 
 

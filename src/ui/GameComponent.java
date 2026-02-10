@@ -1,6 +1,8 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
@@ -37,12 +39,14 @@ public class GameComponent extends JComponent {
 	static ArrayList<Wall> walls = new ArrayList<Wall>();
 	ArrayList<Floor> floors = new ArrayList<Floor>();
 	ArrayList<Coin> coins = new ArrayList<Coin>();
+	private Font mainFont;
 	
 
 
 	public GameComponent(GameModel model) {
 	this.model = model;
 	tileSize = GameModel.tileSize;
+	mainFont = new Font("Verdana", Font.BOLD, 16);
 	
 	loadLevel();
 	worldWidth = tileSize * fileWidth;
@@ -95,7 +99,7 @@ public class GameComponent extends JComponent {
   	  
 	    timer = new Timer(70, e -> {
 	    	//Zombie collision and movement
-	    	for (int i = 0; i <= zombie.size(); i++) {
+	    	for (int i = 0; i < zombie.size(); i++) {
 				Zombie z1 = zombie.get(i);
 				int tempX = z1.x;
 				int tempY = z1.y;
@@ -105,20 +109,20 @@ public class GameComponent extends JComponent {
 					if(z1.boundingBox().intersects(z2.boundingBox())) {
 						z1.revert(tempX, tempY);
 					}
-					else {
-						z1.update(worldWidth, worldHeight);
-					}
 				}
-				for (int j = 0; j < walls.size(); j++) {
-					if(z1.boundingBox().intersects(walls.get(j).boundingBox())) {
-						z1.revert(tempX, tempY);
-						z1.update(worldWidth, worldHeight);
-					}
-				}
-				
-			}
-//	    	  zombie.update(WIDTH, HEIGHT);
-//	    	  zombie.randmove();
+				z1.update(worldWidth, worldHeight);
+				if(z1.boundingBox().intersects(player.boundingBox())) player.handleKilled();
+	    	}
+	    	
+	    	//Coin stuff (these variables names are about to get PG-13 if things don't start working)
+	    	for(int i = 0; i < coins.size(); i++) {
+	    		Coin c = coins.get(i);
+	    		if(c.boundingBox().intersects(player.boundingBox())) {
+	    			player.handleScore();
+	    			coins.remove(i);
+	    		}
+	    	}
+
 	    	  repaint();
 	    	  
 	    	});
@@ -133,6 +137,8 @@ public class GameComponent extends JComponent {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setFont(mainFont);
+		
 		for (int i = 0; i < walls.size(); i++) {
 			Wall wall = (Wall) walls.get(i);
 			wall.draw(g2);
@@ -151,7 +157,9 @@ public class GameComponent extends JComponent {
 			Zombie z = (Zombie) zombie.get(i);
 			z.draw(g2);
 		}
-
+		g2.setColor(Color.black);
+		g2.drawString("Score: " + player.score, 4, 16);
+		g2.drawString("Lives: " + player.lives, 4, 32);
 	}
 	public static boolean wallTest(int x,int y) {
 		for(int i = 0; i < walls.size(); i++) {
@@ -215,5 +223,7 @@ public class GameComponent extends JComponent {
 			System.out.println("level1.txt not found");
 		}
 	}
+	
+
 
 }

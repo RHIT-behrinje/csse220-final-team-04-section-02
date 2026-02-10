@@ -27,10 +27,14 @@ public class Characterz implements Collidable {
 	private static boolean triedLoad = false;
 	int height = GameModel.tileSize;
 	int width = GameModel.tileSize;
+	public int lives = 5;
+	public int score = 0;
 
 	public Characterz(int x, int y) {
 		this.x = x;
 		this.y = y;
+		startX = x;
+		startY = y;
 
 		loadSpriteOnce();
 	}
@@ -119,6 +123,16 @@ public class Characterz implements Collidable {
 		r.width = width;
 		r.height = height;
 		return r;
+	}
+	
+	public void handleKilled() {
+		lives = lives -1;
+		x = startX;
+		y = startY;
+	}
+	
+	public void handleScore() {
+		score += 1;
 	}
 
 
