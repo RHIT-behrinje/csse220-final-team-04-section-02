@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -40,11 +41,23 @@ public class Coin {
 		if (sprite != null) {
 		// sprite replaces the circle
 		g2.drawImage(sprite, x, y, width, height, null);
+		//Bounding box
+		g2.setColor(Color.black);
+		g2.draw(boundingBox());
 		} else {
 		// fallback if sprite failed to load
 		g2.setColor(Color.RED);
 		g2.fillRect(x, y, width, height);
 		}
+	}
+	
+	public Rectangle boundingBox() {
+		Rectangle r = new Rectangle();
+		r.x = x;
+		r.y = y;
+		r.width = width;
+		r.height = height;
+		return r;
 	}
 
 }

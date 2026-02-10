@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -45,6 +46,15 @@ public class EXIT {
 		g2.setColor(Color.RED);
 		g2.fillRect(x, y, width, height);
 		}
+	}
+	
+	public Rectangle boundingBox() {
+		Rectangle r = new Rectangle();
+		r.x = x;
+		r.y = y;
+		r.width = width;
+		r.height = height;
+		return r;
 	}
 
 }

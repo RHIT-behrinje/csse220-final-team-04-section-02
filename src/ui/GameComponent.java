@@ -31,10 +31,11 @@ public class GameComponent extends JComponent {
 	private Timer timer;
 	public static final int WIDTH = 20*GameModel.tileSize;
 	public static final int HEIGHT = 20*GameModel.tileSize;
-	ArrayList zombie = new ArrayList<Zombie>();
-	static ArrayList walls = new ArrayList<Wall>();
-	ArrayList floors = new ArrayList<Floor>();
-	static ArrayList coins = new ArrayList<Coin>();
+	private int fileWidth , fileHeight , worldWidth, worldHeight;
+	ArrayList<Zombie> zombie = new ArrayList<Zombie>();
+	static ArrayList<Wall> walls = new ArrayList<Wall>();
+	ArrayList<Floor> floors = new ArrayList<Floor>();
+	static ArrayList<Coin> coins = new ArrayList<Coin>();
 	
 
 
