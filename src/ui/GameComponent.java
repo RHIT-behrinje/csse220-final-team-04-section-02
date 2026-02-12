@@ -53,11 +53,13 @@ public class GameComponent extends JComponent {
 	worldHeight = tileSize * fileHeight;
 	setPreferredSize(new Dimension(worldWidth, worldHeight));
 	
-    timer = new Timer(20, e -> {
+    timer = new Timer(70, e -> {
     	  player.update(WIDTH, HEIGHT);
     	  repaint();
     	});
-    	timer.start();
+    //	timer.start();
+   
+	 
     	setFocusable(true);
   	
     	addKeyListener(new KeyAdapter() {
@@ -97,7 +99,7 @@ public class GameComponent extends JComponent {
     		}
     	});
   	  
-	    timer = new Timer(70, e -> {
+	    timer = new Timer(100, e -> {
 	    	//Zombie collision and movement
 	    	for (int i = 0; i < zombie.size(); i++) {
 				Zombie z1 = zombie.get(i);
@@ -126,10 +128,15 @@ public class GameComponent extends JComponent {
 	    	  repaint();
 	    	  
 	    	});
-	    	timer.start();
+	    //	timer.start();
+	    
 	    	
 	    	
 	    	
+	}
+	
+	public void startGame() {
+	    timer.start();
 	}
 
 
@@ -157,7 +164,7 @@ public class GameComponent extends JComponent {
 			Zombie z = (Zombie) zombie.get(i);
 			z.draw(g2);
 		}
-		g2.setColor(Color.black);
+		g2.setColor(Color.BLACK);
 		g2.drawString("Score: " + player.score, 4, 16);
 		g2.drawString("Lives: " + player.lives, 4, 32);
 	}
@@ -170,6 +177,7 @@ public class GameComponent extends JComponent {
 		}
 		return true;
 	}
+
 	
 	private void loadLevel() {
 		File file = new File("level1.txt"); 
