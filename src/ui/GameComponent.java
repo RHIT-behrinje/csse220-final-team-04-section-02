@@ -29,6 +29,7 @@ public class GameComponent extends JComponent {
 
 	private GameModel model;
 	public int tileSize;
+	public Runnable gameover;
 	private Timer timer;
 	public static final int WIDTH = 20 * GameModel.tileSize;
 	public static final int HEIGHT = 20 * GameModel.tileSize;
@@ -38,9 +39,11 @@ public class GameComponent extends JComponent {
 	ArrayList<Floor> floors = new ArrayList<Floor>();
 	ArrayList<Coin> coins = new ArrayList<Coin>();
 	private Font mainFont;
+	boolean alive = true;
 
-	public GameComponent(GameModel model, int num) {
+	public GameComponent(GameModel model, int num, Runnable death) {
 		this.model = model;
+		this.gameover = death;
 		tileSize = GameModel.tileSize;
 		mainFont = new Font("Verdana", Font.BOLD, 16);
 
@@ -103,11 +106,13 @@ public class GameComponent extends JComponent {
 				Zombie z1 = zombie.get(i);
 				int tempX = z1.x;
 				int tempY = z1.y;
+				z1.randmove();
 				for (int j = i + 1; j < zombie.size(); j++) {
 					Zombie z2 = zombie.get(j);
-					z1.randmove();
+					//z1.randmove();
 					if (z1.boundingBox().intersects(z2.boundingBox())) {
-						z1.revert(tempX, tempY);
+						z1.x = tempX;
+						z1.y = tempY;
 					}
 				}
 				z1.update(worldWidth, worldHeight);
@@ -124,8 +129,17 @@ public class GameComponent extends JComponent {
 					coins.remove(i);
 				}
 			}
-
+			if (player.lives <= 0) {
+				stopgame();
+				System.out.println("died");
+				gameover.run();
+				return;
+			}
+			
 			repaint();
+			
+
+			
 
 		});
 		// timer.start();
@@ -134,6 +148,10 @@ public class GameComponent extends JComponent {
 
 	public void startGame() {
 		timer.start();
+	}
+	
+	public void stopgame() {
+		timer.stop();
 	}
 
 	@Override
@@ -173,6 +191,10 @@ public class GameComponent extends JComponent {
 			}
 		}
 		return true;
+	}
+	
+	public int GetLives() {
+		return player.lives;
 	}
 
 	private void loadLevel(int num) {

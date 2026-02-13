@@ -131,8 +131,8 @@ public class Zombie {
 		y = oldY;
 		dx = 0;
 		dy = 0;
-//		dx = -dx;
-//		dy = -dy;
+		//dx = - 30;
+		//dy = -dy;
 	}
 	
 	public Rectangle boundingBox() {

@@ -17,23 +17,27 @@ public class GameWindow {
 	public static void show() {
 		// Minimal model instance (empty for now, by design)
 		GameModel model = new GameModel();
+		
 
 
 		JFrame frame = new JFrame("CSSE220 Final Project");
+	
 		
 		frame = new JFrame("Moving Ball");
 		//frame.setContentPane(new Controller());
 		
 		JPanel cards = new JPanel(new CardLayout());
 		Startscreen start = new Startscreen();
-		GameComponent game = new GameComponent(model,1);
+		
 		Deathscreen death = new Deathscreen();
 		//GameComponent game2 = new GameComponent(model,2);
 		cards.add(start, "START");
-		cards.add(game, "GAME");
+		
 		cards.add(death, "death");
 		frame.setContentPane(cards);
 		CardLayout cl = (CardLayout) cards.getLayout();
+		GameComponent game = new GameComponent(model,1,()-> cl.show(cards,"death"));
+		cards.add(game, "GAME");
 		cl.show(cards, "START");
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,12 +46,18 @@ public class GameWindow {
 		    game.startGame();
 		    cl.show(cards, "GAME");
 		    game.requestFocusInWindow();
+		    System.out.println(game.GetLives());
 
 		});
 		
-		if (game.player.lives <= 0) {
+		if (!game.alive) {
 			cl.show(cards, "death");
+			System.out.println(game.player.lives);
 		}
+
+		
+
+		
 
 		
 		
@@ -63,6 +73,12 @@ public class GameWindow {
 		frame.pack();
 		frame.setLocationRelativeTo(null); // center on screen (nice UX, still minimal)
 		frame.setVisible(true);
+		
+		
+
+		
 		}
+	
+
 
 }
