@@ -24,7 +24,7 @@ import model.Wall;
 import model.Zombie;
 
 public class GameComponent extends JComponent {
-	static Characterz player;
+	Characterz player;
 	EXIT exit;
 
 	private GameModel model;
@@ -39,12 +39,12 @@ public class GameComponent extends JComponent {
 	ArrayList<Coin> coins = new ArrayList<Coin>();
 	private Font mainFont;
 
-	public GameComponent(GameModel model) {
+	public GameComponent(GameModel model, int num) {
 		this.model = model;
 		tileSize = GameModel.tileSize;
 		mainFont = new Font("Verdana", Font.BOLD, 16);
 
-		loadLevel();
+		loadLevel(num);
 		worldWidth = tileSize * fileWidth;
 		worldHeight = tileSize * fileHeight;
 		setPreferredSize(new Dimension(worldWidth, worldHeight));
@@ -54,13 +54,13 @@ public class GameComponent extends JComponent {
 //			repaint();
 //		});
 ////		 timer.start();
-
-		setFocusable(true);
+		
+		//setFocusable(true);
 				
 		this.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				System.out.println("clicked");
+				//System.out.println("clicked");
 				if (e.getKeyCode() == KeyEvent.VK_D) {
 					player.movepx();
 				}
@@ -76,7 +76,7 @@ public class GameComponent extends JComponent {
 			}
 
 			public void keyReleased(KeyEvent e) {
-				System.out.println("realeased");
+				//System.out.println("realeased");
 				if (e.getKeyCode() == KeyEvent.VK_D) {
 					player.stop();
 				}
@@ -175,8 +175,8 @@ public class GameComponent extends JComponent {
 		return true;
 	}
 
-	private void loadLevel() {
-		File file = new File("level1.txt");
+	private void loadLevel(int num) {
+		File file = model.getlevel(num);
 
 		try {
 			Scanner scanner = new Scanner(file);

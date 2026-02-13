@@ -26,9 +26,12 @@ public class GameWindow {
 		
 		JPanel cards = new JPanel(new CardLayout());
 		Startscreen start = new Startscreen();
-		GameComponent game = new GameComponent(model);
+		GameComponent game = new GameComponent(model,1);
+		Deathscreen death = new Deathscreen();
+		//GameComponent game2 = new GameComponent(model,2);
 		cards.add(start, "START");
 		cards.add(game, "GAME");
+		cards.add(death, "death");
 		frame.setContentPane(cards);
 		CardLayout cl = (CardLayout) cards.getLayout();
 		cl.show(cards, "START");
@@ -38,7 +41,16 @@ public class GameWindow {
 		Startscreen.start.addActionListener(e -> {
 		    game.startGame();
 		    cl.show(cards, "GAME");
+		    game.requestFocusInWindow();
+
 		});
+		
+		if (game.player.lives <= 0) {
+			cl.show(cards, "death");
+		}
+
+		
+		
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
