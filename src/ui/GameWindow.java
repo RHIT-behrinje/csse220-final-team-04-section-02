@@ -53,12 +53,14 @@ public class GameWindow {
 			);
 		cards.add(game, "GAME");
 		cl.show(cards, "START");
+		playSound("/Sounds/startmusic.wav");
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Startscreen.start.addActionListener(e -> {
 		    game.startGame();
 		    cl.show(cards, "GAME");
+		    playSound("/Sounds/background.wav");
 		    game.requestFocusInWindow();
 		    System.out.println(game.GetLives());
 
@@ -87,6 +89,13 @@ public class GameWindow {
 
 	public static void playSound(String soundFile) {
 	    try {
+
+	        // Stop current audio if something is playing
+	        if (clip != null) {
+	            clip.stop();
+	            clip.close();
+	        }
+
 	        URL soundURL = GameWindow.class.getResource(soundFile);
 
 	        if (soundURL == null) {
@@ -96,8 +105,10 @@ public class GameWindow {
 
 	        AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundURL);
 
-	        clip = AudioSystem.getClip();   // use class variable
+	        clip = AudioSystem.getClip();
 	        clip.open(audioStream);
+
+	        clip.loop(Clip.LOOP_CONTINUOUSLY); // 🔁 Always loop
 	        clip.start();
 
 	    } catch (Exception e) {

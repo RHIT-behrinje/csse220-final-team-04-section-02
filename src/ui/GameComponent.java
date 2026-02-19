@@ -84,6 +84,9 @@ public class GameComponent extends JComponent {
 				if (e.getKeyCode() == KeyEvent.VK_S) {
 					player.movepy();
 				}
+				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+					System.out.println("launch");
+				}
 			}
 
 			public void keyReleased(KeyEvent e) {
@@ -99,6 +102,9 @@ public class GameComponent extends JComponent {
 				}
 				if (e.getKeyCode() == KeyEvent.VK_S) {
 					player.stop();
+				}
+				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+					System.out.println("stop");
 				}
 
 			}
