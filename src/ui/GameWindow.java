@@ -28,15 +28,15 @@ public class GameWindow {
 		
 		JPanel cards = new JPanel(new CardLayout());
 		Startscreen start = new Startscreen();
-		
+		Winner win = new Winner();
 		Deathscreen death = new Deathscreen();
 		//GameComponent game2 = new GameComponent(model,2);
 		cards.add(start, "START");
-		
+		cards.add(win,"Winner");
 		cards.add(death, "death");
 		frame.setContentPane(cards);
 		CardLayout cl = (CardLayout) cards.getLayout();
-		GameComponent game = new GameComponent(model,1,()-> cl.show(cards,"death"));
+		GameComponent game = new GameComponent(model,1,()-> cl.show(cards,"death"),()-> cl.show(cards, "Winner"));
 		cards.add(game, "GAME");
 		cl.show(cards, "START");
 		
@@ -52,16 +52,13 @@ public class GameWindow {
 		
 		if (!game.alive) {
 			cl.show(cards, "death");
-			System.out.println(game.player.lives);
 		}
-
+		
+		if (game.win) {
+			cl.show(cards, "Winner");
+		}
 		
 
-		
-
-		
-		
-		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//frame.add(new GameComponent(model));

@@ -38,6 +38,15 @@ public class Characterz implements Collidable {
 
 		loadSpriteOnce();
 	}
+	
+	public int getx() {
+		return x;
+		
+	}
+	
+	public int gety() {
+		return y;
+	}
 
 	private static void loadSpriteOnce() {
 		if (triedLoad) return;

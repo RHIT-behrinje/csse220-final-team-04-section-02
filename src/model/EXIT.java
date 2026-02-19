@@ -25,6 +25,14 @@ public class EXIT {
 		
 	}
 	
+	public int getx() {
+		return x;
+	}
+	
+	public int gety() {
+		return y;
+	}
+	
 	private static void loadSpriteOnce() {
 		if (triedLoad) return;
 		triedLoad = true;

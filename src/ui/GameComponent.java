@@ -30,20 +30,25 @@ public class GameComponent extends JComponent {
 	private GameModel model;
 	public int tileSize;
 	public Runnable gameover;
+	public Runnable Win;
 	private Timer timer;
 	public static final int WIDTH = 20 * GameModel.tileSize;
 	public static final int HEIGHT = 20 * GameModel.tileSize;
 	private int fileWidth, fileHeight, worldWidth, worldHeight;
-	ArrayList<Zombie> zombie = new ArrayList<Zombie>();
-	static ArrayList<Wall> walls = new ArrayList<Wall>();
-	ArrayList<Floor> floors = new ArrayList<Floor>();
-	ArrayList<Coin> coins = new ArrayList<Coin>();
+	ArrayList<Zombie> zombie;
+	static ArrayList<Wall> walls;
+	ArrayList<Floor> floors;
+	ArrayList<Coin> coins;
 	private Font mainFont;
 	boolean alive = true;
+	boolean win = false;
+	int level = 1;
+	
 
-	public GameComponent(GameModel model, int num, Runnable death) {
+	public GameComponent(GameModel model, int num, Runnable death, Runnable win) {
 		this.model = model;
 		this.gameover = death;
+		this.Win = win;
 		tileSize = GameModel.tileSize;
 		mainFont = new Font("Verdana", Font.BOLD, 16);
 
@@ -51,6 +56,7 @@ public class GameComponent extends JComponent {
 		worldWidth = tileSize * fileWidth;
 		worldHeight = tileSize * fileHeight;
 		setPreferredSize(new Dimension(worldWidth, worldHeight));
+
 
 //		timer = new Timer(70, e -> {
 //			player.update(WIDTH, HEIGHT);
@@ -136,6 +142,12 @@ public class GameComponent extends JComponent {
 				return;
 			}
 			
+			if ( player.boundingBox().intersects(exit.boundingBox())) {
+				level ++;
+				loadLevel(level);
+				System.out.println(level);
+			}
+			
 			repaint();
 			
 
@@ -153,6 +165,7 @@ public class GameComponent extends JComponent {
 	public void stopgame() {
 		timer.stop();
 	}
+	
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -196,12 +209,20 @@ public class GameComponent extends JComponent {
 	public int GetLives() {
 		return player.lives;
 	}
+	
 
 	private void loadLevel(int num) {
+		if (num < 3) {
 		File file = model.getlevel(num);
+		coins = new ArrayList<Coin>();
+		walls = new ArrayList<Wall>();
+		floors = new ArrayList<Floor>();
+		zombie = new ArrayList<Zombie>();
 
 		try {
 			Scanner scanner = new Scanner(file);
+			
+			
 
 			int row = 0;
 
@@ -245,6 +266,11 @@ public class GameComponent extends JComponent {
 		} catch (FileNotFoundException e) {
 			System.out.println("level1.txt not found");
 		}
+		}
+		else {
+			Win.run();
+		}
+		
 	}
 
 }
