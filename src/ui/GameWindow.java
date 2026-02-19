@@ -8,8 +8,13 @@ import javax.swing.JPanel;
 
 import model.GameModel;
 
+import javax.sound.sampled.*;
+import java.io.IOException;
+import java.net.URL;
+
 
 public class GameWindow {
+	private static Clip clip;
 	
 	
 	
@@ -36,7 +41,16 @@ public class GameWindow {
 		cards.add(death, "death");
 		frame.setContentPane(cards);
 		CardLayout cl = (CardLayout) cards.getLayout();
-		GameComponent game = new GameComponent(model,1,()-> cl.show(cards,"death"),()-> cl.show(cards, "Winner"));
+		GameComponent game = new GameComponent(
+			    model,
+			    1,
+			    () -> {cl.show(cards,"death");
+			    playSound("/Sounds/dead.wav");},
+			    () -> {
+			        cl.show(cards, "Winner");
+			        playSound("/Sounds/end.wav");
+			    }
+			);
 		cards.add(game, "GAME");
 		cl.show(cards, "START");
 		
@@ -50,13 +64,7 @@ public class GameWindow {
 
 		});
 		
-		if (!game.alive) {
-			cl.show(cards, "death");
-		}
-		
-		if (game.win) {
-			cl.show(cards, "Winner");
-		}
+
 		
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,6 +83,28 @@ public class GameWindow {
 
 		
 		}
+	
+
+	public static void playSound(String soundFile) {
+	    try {
+	        URL soundURL = GameWindow.class.getResource(soundFile);
+
+	        if (soundURL == null) {
+	            System.out.println("Sound file not found: " + soundFile);
+	            return;
+	        }
+
+	        AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundURL);
+
+	        clip = AudioSystem.getClip();   // use class variable
+	        clip.open(audioStream);
+	        clip.start();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 	
 
 

@@ -24,7 +24,7 @@ import model.Wall;
 import model.Zombie;
 
 public class GameComponent extends JComponent {
-	Characterz player;
+	Characterz player = new Characterz(0,0);
 	EXIT exit;
 
 	private GameModel model;
@@ -43,6 +43,7 @@ public class GameComponent extends JComponent {
 	boolean alive = true;
 	boolean win = false;
 	int level = 1;
+	int coincount;
 	
 
 	public GameComponent(GameModel model, int num, Runnable death, Runnable win) {
@@ -51,6 +52,7 @@ public class GameComponent extends JComponent {
 		this.Win = win;
 		tileSize = GameModel.tileSize;
 		mainFont = new Font("Verdana", Font.BOLD, 16);
+		
 
 		loadLevel(num);
 		worldWidth = tileSize * fileWidth;
@@ -142,7 +144,7 @@ public class GameComponent extends JComponent {
 				return;
 			}
 			
-			if ( player.boundingBox().intersects(exit.boundingBox())) {
+			if ( player.boundingBox().intersects(exit.boundingBox()) && coincount == player.score) {
 				level ++;
 				loadLevel(level);
 				System.out.println(level);
@@ -234,7 +236,10 @@ public class GameComponent extends JComponent {
 					char c = line.charAt(col);
 
 					if (c == 'P') {
-						player = new Characterz(col * GameModel.tileSize, row * GameModel.tileSize);
+						player.x = col * GameModel.tileSize;
+						player.y = row * GameModel.tileSize;
+						player.startX = col * GameModel.tileSize;
+						player.startY = row * GameModel.tileSize;
 
 					}
 					if (c == 'Z') {
@@ -270,6 +275,7 @@ public class GameComponent extends JComponent {
 		else {
 			Win.run();
 		}
+		coincount = coincount + coins.size();
 		
 	}
 

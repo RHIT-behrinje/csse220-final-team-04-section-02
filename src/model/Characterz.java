@@ -17,8 +17,8 @@ import ui.GameComponent;
 
 public class Characterz implements Collidable {
 
-	int startX;
-	int startY;
+	public int startX;
+	public int startY;
 	public int x = startX;
 	public int y;
 	public int dx = 0;
