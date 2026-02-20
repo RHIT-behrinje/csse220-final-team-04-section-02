@@ -45,22 +45,26 @@ public class GameWindow {
 			    model,
 			    1,
 			    () -> {cl.show(cards,"death");
-			    playSound("/Sounds/dead.wav");},
+			    playSound("/Sounds/dead.wav",true);
+			    
+			    },
 			    () -> {
 			        cl.show(cards, "Winner");
-			        playSound("/Sounds/end.wav");
+			        playSound("/Sounds/end.wav",true);
+			       
 			    }
 			);
 		cards.add(game, "GAME");
 		cl.show(cards, "START");
-		playSound("/Sounds/startmusic.wav");
+		playSound("/Sounds/startmusic.wav",true);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Startscreen.start.addActionListener(e -> {
 		    game.startGame();
 		    cl.show(cards, "GAME");
-		    playSound("/Sounds/background.wav");
+		    playSound("/Sounds/background.wav", true);
+		   
 		    game.requestFocusInWindow();
 		    System.out.println(game.GetLives());
 
@@ -87,10 +91,9 @@ public class GameWindow {
 		}
 	
 
-	public static void playSound(String soundFile) {
+	public static void playSound(String soundFile, boolean loop) {
 	    try {
 
-	        // Stop current audio if something is playing
 	        if (clip != null) {
 	            clip.stop();
 	            clip.close();
@@ -108,7 +111,10 @@ public class GameWindow {
 	        clip = AudioSystem.getClip();
 	        clip.open(audioStream);
 
-	        clip.loop(Clip.LOOP_CONTINUOUSLY); // 🔁 Always loop
+	        if (loop) {
+	            clip.loop(Clip.LOOP_CONTINUOUSLY);
+	        }
+
 	        clip.start();
 
 	    } catch (Exception e) {

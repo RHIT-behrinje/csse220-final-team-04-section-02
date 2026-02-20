@@ -59,21 +59,19 @@ public class Zombie {
 	public void randmove() {
 		double r = Math.random();
 
-		if (r >= 0 && r < 0.2){
+		if (r >= 0 && r < 0.25){
 			movenx();
 		}
-		if (r >= 0.2 && r < 0.4){
+		if (r >= 0.25 && r < 0.5){
 			movepx();
 		}
-		if (r >= 0.4 && r < 0.6){
+		if (r >= 0.5 && r < 0.75){
 			moveny();
 		}
-		if (r >= 0.6 && r < 0.8){
+		if (r >= 0.75 && r < 1.0){
 			movepy();
 		}
-		if (r >= 0.8 && r < 1.0){
-			stop();
-		}
+
 	}
 	public void stop() {
 		this.dy = 0;
@@ -90,6 +88,20 @@ public class Zombie {
 	}
 	public void moveny() {
 		this.dy = -GameModel.tileSize;
+	}
+	
+	public void launchpx() {
+		this.x = this.x + GameModel.tileSize;
+	}
+	public void launchnx() {
+		this.x = this.x - GameModel.tileSize;
+	}
+	
+	public void launchpy() {
+		this.y = this.y + GameModel.tileSize;
+	}
+	public void launchny() {
+		this.y = this.y - GameModel.tileSize;
 	}
 	
 	public void update(int worldWidth, int worldHeight) {
