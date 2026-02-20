@@ -44,6 +44,7 @@ public class GameComponent extends JComponent {
 	boolean win = false;
 	int level = 1;
 	int coincount;
+	
 
 	public GameComponent(GameModel model, int num, Runnable death, Runnable win) {
 		this.model = model;
@@ -84,7 +85,7 @@ public class GameComponent extends JComponent {
 					player.movepy();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-					catapult();
+					System.out.println("launch");
 				}
 			}
 
@@ -103,7 +104,7 @@ public class GameComponent extends JComponent {
 					player.stop();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-					stopCatapult();
+					System.out.println("stop");
 				}
 
 			}
@@ -154,9 +155,8 @@ public class GameComponent extends JComponent {
 				loadLevel(level);
 				System.out.println(level);
 			}
-			stopCatapult();
-			repaint();
 			
+			repaint();
 			
 
 			
@@ -216,6 +216,11 @@ public class GameComponent extends JComponent {
 	
 	public int GetLives() {
 		return player.lives;
+	}
+	
+	public int Launchable() {
+		
+		return zombie.size() + 1;
 	}
 	
 
@@ -283,30 +288,6 @@ public class GameComponent extends JComponent {
 		}
 		coincount = coincount + coins.size();
 		
-	}
-	void catapult() {
-		for (int i = 0; i < zombie.size(); i++) {
-			Zombie z1 = zombie.get(i);
-			if(player.x-z1.x==GameModel.tileSize&&player.y==z1.y) {
-				z1.movenx();
-			}
-			if(z1.x-player.x==GameModel.tileSize&&player.y==z1.y) {
-				z1.movepx();
-			}
-			if(player.y-z1.y==GameModel.tileSize&&player.x==z1.x) {
-				z1.moveny();
-			}
-			if(z1.y-player.y==GameModel.tileSize&&player.x==z1.x) {
-				z1.movepy();
-			}
-		}
-		
-	}
-	void stopCatapult() {
-		for (int i = 0; i < zombie.size(); i++) {
-			Zombie z1 = zombie.get(i);
-			z1.stop();
-		}
 	}
 
 }
