@@ -4,7 +4,7 @@ import java.io.File;
 
 public class GameModel {
 	public final static int tileSize = 40;
-	
+
 	public File getlevel(int num) {
 		if (num == 0) {
 			File file = new File("levelblank.txt");
